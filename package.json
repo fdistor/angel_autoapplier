@@ -1,0 +1,23 @@
+{
+  "name": "angellist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fdistor/angel_autoapplier.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fdistor/angel_autoapplier/issues"
+  },
+  "homepage": "https://github.com/fdistor/angel_autoapplier#readme",
+  "devDependencies": {
+    "googleapis": "^39.2.0"
+  }
+}
