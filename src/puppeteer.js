@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const { user, password, fullName } = require("../config/config.js");
+const { user, password, myFullName } = require("../config/config.js");
 const createCoverLetter = require("./coverLetter.js");
 const clearBitKey = require("../keys/clearbit_key.js");
 
@@ -70,7 +70,7 @@ const applyToJob = async (page, job) => {
     company,
     position,
     recruiterFirstName,
-    recruiterFullName,
+    myFullName,
     job.snippet
   );
   await page.type(clTextArea, cL);
