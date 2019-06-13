@@ -66,14 +66,14 @@ const applyToJob = async (page, job) => {
   console.log("fullname: " + recruiterFullName);
   console.log("firstname: " + recruiterFirstName);
 
-  // const cL = createCoverLetter(
-  //   company,
-  //   position,
-  //   firstName,
-  //   fullName,
-  //   job.snippet
-  // );
-  // await page.type(clTextArea, cL);
+  const cL = createCoverLetter(
+    company,
+    position,
+    recruiterFirstName,
+    recruiterFullName,
+    job.snippet
+  );
+  await page.type(clTextArea, cL);
 
   // await page.click(sendApplicationButton);
 
