@@ -39,6 +39,12 @@ const getRecruiterFullNameAndFirstName = async page => {
   return [recruiterFullName, firstName];
 };
 
+const getDomainName = async page => {
+  const domainElement = ".website-link";
+
+  return await getTextContent(page, domainElement);
+};
+
 const getRecruiterEmail = async (page, name, company) => {};
 
 const updateSpreadsheetRow = async (page, recruiter) => {};
@@ -50,6 +56,10 @@ const applyToJob = async (page, job) => {
   const sendApplicationButton = ".fontello-paper-plane";
 
   await page.goto(link);
+
+  const domain = await getDomainName(page);
+
+  console.log(domain);
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
