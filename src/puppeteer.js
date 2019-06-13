@@ -1,6 +1,7 @@
 const puppeteer = require("puppeteer");
 const { user, password, fullName } = require("../config/config.js");
 const createCoverLetter = require("./coverLetter.js");
+const clearBitKey = require("../keys/clearbit_key.js");
 
 const logInUser = async page => {
   const loginPage = "https://angel.co/login";
@@ -23,6 +24,10 @@ const getRecruiterName = async page => {
   return await page.evaluate(element => element.textContent, span);
 };
 
+const getRecruiterEmail = async (page, name, company) => {};
+
+const updateRow = async (page, recruiter) => {};
+
 const applyToJob = async (page, job) => {
   const { company, position } = job;
   const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
@@ -32,8 +37,10 @@ const applyToJob = async (page, job) => {
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
-  const recruiter = await getRecruiterName(page);
-  const cL = createCoverLetter(company, position, recruiter, fullName);
+  const recruiter = (await getRecruiterName(page)).split("");
+  const firstName = recruiter[0];
+  const lastName = recruiter[recruiter.length - 1];
+  const cL = createCoverLetter(company, position, firstName, fullName);
   await page.type(clTextArea, cL);
 };
 
@@ -50,7 +57,6 @@ const autoApply = async jobs => {
   const page = await browser.newPage();
 
   await logInUser(page);
-
   await applyToJob(page, jobs[0]);
 
   await page.waitFor(3000);
