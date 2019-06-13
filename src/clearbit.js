@@ -11,16 +11,13 @@ class SearchRecruiterEmail {
     return clearbit.Prospector.search({
       domain: this.domain,
       name: this.fullName
-    })
-      .then(persons => {
-        if (persons.results.length) {
-          // console.log(persons.results[0].email);
-          return persons.results[0].email;
-        } else {
-          return null;
-        }
-      })
-      .catch(() => console.log("Invalid query"));
+    }).then(persons => {
+      if (persons.results.length) {
+        return persons.results[0].email;
+      } else {
+        return null;
+      }
+    });
   }
 
   searchByEmail() {}
