@@ -1,3 +1,5 @@
 module.exports = {
-  sheetsId: ""
+  sheetsId: "",
+  user: "",
+  password: ""
 };
