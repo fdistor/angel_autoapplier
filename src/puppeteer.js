@@ -18,30 +18,43 @@ const logInUser = async page => {
   await page.waitForNavigation({ waitUntil: "networkidle2" });
 };
 
-const getRecruiterName = async page => {
-  await page.waitForSelector(".name");
-  const span = await page.$(".name");
-  return await page.evaluate(element => element.textContent, span);
+const getTextContent = async (page, selector) => {
+  await page.waitForSelector(selector);
+  const element = await page.$(selector);
+  return await page.evaluate(element => element.textContent, element);
 };
 
 const getRecruiterEmail = async (page, name, company) => {};
 
-const updateRow = async (page, recruiter) => {};
+const updateSpreadsheetRow = async (page, recruiter) => {};
 
 const applyToJob = async (page, job) => {
-  const { company, position } = job;
   const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
   const clTextArea = "textarea[name=note]";
+  const sendApplicationButton = ".fontello-paper-plane";
+  const recruiterElement = ".name";
+  const companyElement = ".u-colorGray3";
 
   await page.goto(job.link);
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
-  const recruiter = (await getRecruiterName(page)).split("");
-  const firstName = recruiter[0];
-  const lastName = recruiter[recruiter.length - 1];
-  const cL = createCoverLetter(company, position, firstName, fullName);
+  const recruiterFullName = await getTextContent(page, recruiterElement);
+  const recruiterNameArray = recruiterFullName.split("");
+  const firstName = recruiterNameArray[0];
+
+  const cL = createCoverLetter(
+    company,
+    position,
+    firstName,
+    fullName,
+    job.snippet
+  );
   await page.type(clTextArea, cL);
+
+  // await page.click(sendApplicationButton);
+
+  // await updateSpreadsheetRow(page, recruiter, re);
 };
 
 const applyToAllJobs = async (page, jobs) => {
