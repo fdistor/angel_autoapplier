@@ -1,6 +1,7 @@
 const GoogleSpreadsheet = require("google-spreadsheet");
 const { promisify } = require("util");
 const { sheetsId } = require("../config/config.js");
+const { autoApply } = require("./puppeteer.js");
 
 const creds = require("../keys/client_secret.json");
 
@@ -15,6 +16,9 @@ const accessSpreadsheet = async () => {
     limit: 91,
     query: "applied = No and haslink = TRUE"
   });
+
+  await autoApply(rows);
+  // console.log(rows);
 };
 
 accessSpreadsheet();
