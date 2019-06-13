@@ -10,13 +10,17 @@ const navigateToLogin = async page => {
 };
 
 const logInUser = async page => {
-  await page.waitForSelector("#user_email");
-  await page.click("#user_email");
-  await page.type("#user_email", user);
-  await page.waitForSelector("#user_password");
-  await page.click("#user_password");
-  await page.type("#user_password", password);
-  await page.click(".c-button");
+  const emailBox = "#user_email";
+  const passwordBox = "#user_password";
+  const submitButton = ".c-button";
+
+  await page.waitForSelector(emailBox);
+  await page.click(emailBox);
+  await page.type(emailBox, user);
+  await page.waitForSelector(passwordBox);
+  await page.click(passwordBox);
+  await page.type(passwordBox, password);
+  await page.click(submitButton);
   await page.waitForNavigation({ waitUntil: "networkidle2" });
 };
 
@@ -26,15 +30,12 @@ const getRecruiterName = async page => {
   return await page.evaluate(element => element.textContent, span);
 };
 
-const clickOnButton = async (page, selector) => {
-  await page.click(".c-button--lg");
-};
-
 const applyToJob = async (page, job) => {
   const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
+
   await page.goto(job.link);
   await page.waitForSelector(applyButton);
-  await clickOnButton(page, applyButton);
+  await page.click(applyButton);
 
   const name = await getRecruiterName(page);
   console.log(name);
