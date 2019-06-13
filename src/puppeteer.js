@@ -20,12 +20,23 @@ const logInUser = async page => {
   await page.waitForNavigation({ waitUntil: "networkidle2" });
 };
 
-const clickOnApply = async page => {};
+const getRecruiterName = async page => {
+  await page.waitForSelector(".name");
+  const span = await page.$(".name");
+  return await page.evaluate(element => element.textContent, span);
+};
+
+const clickOnButton = async (page, selector) => {
+  await page.click(".c-button--lg");
+};
 
 const applyToJob = async (page, job) => {
+  const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
   await page.goto(job.link);
+  await page.waitForSelector(applyButton);
+  await clickOnButton(page, applyButton);
 
-  const name = await getRecruiterName();
+  const name = await getRecruiterName(page);
   console.log(name);
 };
 
@@ -45,9 +56,9 @@ const autoApply = async jobs => {
   await navigateToLogin(page);
   await logInUser(page);
 
-  await page.waitFor(3000);
-
   await applyToJob(page, jobs[0]);
+
+  await page.waitFor(3000);
 
   // Close Browser once finished
   await browser.close();
