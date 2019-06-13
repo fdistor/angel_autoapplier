@@ -24,6 +24,22 @@ const getTextContent = async (page, selector) => {
   return await page.evaluate(element => element.textContent, element);
 };
 
+const getPositionAndCompany = async page => {
+  const companyAndPositionElement = ".u-colorGray3";
+
+  return (await getTextContent(page, companyAndPositionElement)).split(" at ");
+};
+
+const getRecruiterFullNameAndFirstName = async page => {
+  const recruiterElement = ".name";
+
+  const recruiterFullName = await getTextContent(page, recruiterElement);
+  const recruiterNameArray = recruiterFullName.split(" ");
+  const firstName = recruiterNameArray[0];
+
+  return [recruiterFullName, firstName];
+};
+
 const getRecruiterEmail = async (page, name, company) => {};
 
 const updateSpreadsheetRow = async (page, recruiter) => {};
@@ -32,25 +48,32 @@ const applyToJob = async (page, job) => {
   const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
   const clTextArea = "textarea[name=note]";
   const sendApplicationButton = ".fontello-paper-plane";
-  const recruiterElement = ".name";
-  const companyElement = ".u-colorGray3";
 
   await page.goto(job.link);
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
-  const recruiterFullName = await getTextContent(page, recruiterElement);
-  const recruiterNameArray = recruiterFullName.split("");
-  const firstName = recruiterNameArray[0];
+  const whatisthis = await getPositionAndCompany(page);
+  const [position, company] = await getPositionAndCompany(page);
+  const [
+    recruiterFullName,
+    recruiterFirstName
+  ] = await getRecruiterFullNameAndFirstName(page);
 
-  const cL = createCoverLetter(
-    company,
-    position,
-    firstName,
-    fullName,
-    job.snippet
-  );
-  await page.type(clTextArea, cL);
+  console.log("whatisthis: " + whatisthis);
+  console.log("position: " + position);
+  console.log("company: " + company);
+  console.log("fullname: " + recruiterFullName);
+  console.log("firstname: " + recruiterFirstName);
+
+  // const cL = createCoverLetter(
+  //   company,
+  //   position,
+  //   firstName,
+  //   fullName,
+  //   job.snippet
+  // );
+  // await page.type(clTextArea, cL);
 
   // await page.click(sendApplicationButton);
 
