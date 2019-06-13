@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
-const { user, password } = require("../config/config.js");
+const { user, password, fullName } = require("../config/config.js");
+const createCoverLetter = require("./coverLetter.js");
 
 const navigateToLogin = async page => {
   const homepage = "https://angel.co";
@@ -31,14 +32,18 @@ const getRecruiterName = async page => {
 };
 
 const applyToJob = async (page, job) => {
+  const { company, position } = job;
   const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
+  const clTextArea = "textarea[name=note]";
 
   await page.goto(job.link);
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
-  const name = await getRecruiterName(page);
-  console.log(name);
+  const recruiter = await getRecruiterName(page);
+  const cL = createCoverLetter(company, position, recruiter, fullName);
+  await page.click(clTextArea);
+  await page.type(clTextArea, cL);
 };
 
 const applyToAllJobs = async (page, jobs) => {
@@ -51,7 +56,6 @@ const autoApply = async jobs => {
     slowMo: 10
   });
 
-  const homepage = "https://angel.co";
   const page = await browser.newPage();
 
   await navigateToLogin(page);
