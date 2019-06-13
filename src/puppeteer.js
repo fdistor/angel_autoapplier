@@ -53,7 +53,6 @@ const applyToJob = async (page, job) => {
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
-  const whatisthis = await getPositionAndCompany(page);
   const [position, company] = await getPositionAndCompany(page);
   const [
     recruiterFullName,
