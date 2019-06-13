@@ -45,11 +45,12 @@ const getRecruiterEmail = async (page, name, company) => {};
 const updateSpreadsheetRow = async (page, recruiter) => {};
 
 const applyToJob = async (page, job) => {
+  const { link, snippet } = job;
   const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
   const clTextArea = "textarea[name=note]";
   const sendApplicationButton = ".fontello-paper-plane";
 
-  await page.goto(job.link);
+  await page.goto(link);
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
@@ -71,7 +72,7 @@ const applyToJob = async (page, job) => {
     position,
     recruiterFirstName,
     myFullName,
-    job.snippet
+    snippet
   );
   await page.type(clTextArea, cL);
 
@@ -81,7 +82,12 @@ const applyToJob = async (page, job) => {
 };
 
 const applyToAllJobs = async (page, jobs) => {
-  jobs.forEach(job => {});
+  let i = jobs.length - 1;
+
+  while (i >= 0) {
+    await applyToJob(page, jobs[i]);
+    i--;
+  }
 };
 
 const autoApply = async jobs => {
@@ -93,7 +99,7 @@ const autoApply = async jobs => {
   const page = await browser.newPage();
 
   await logInUser(page);
-  await applyToJob(page, jobs[0]);
+  await applyToAllJobs(page, jobs);
 
   await page.waitFor(3000);
 
