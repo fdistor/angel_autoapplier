@@ -39,4 +39,11 @@ describe("searchByDomain functionality", () => {
       .searchByDomain()
       .then(email => expect(email).to.equal("jonah@stessa.com"));
   });
+
+  it("Should return null for email not found", () => {
+    searchRecruiterEmail.fullName = "Does Not Exist";
+    searchRecruiterEmail
+      .searchByDomain()
+      .then(email => expect(email).to.equal(null));
+  });
 });
