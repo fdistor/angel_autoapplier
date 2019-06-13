@@ -1,7 +1,6 @@
 const puppeteer = require("puppeteer");
 const { user, password, myFullName } = require("../config/config.js");
 const createCoverLetter = require("./coverLetter.js");
-const clearBitKey = require("../keys/clearbit_key.js");
 
 const logInUser = async page => {
   const loginPage = "https://angel.co/login";
@@ -60,12 +59,6 @@ const applyToJob = async (page, job) => {
     recruiterFullName,
     recruiterFirstName
   ] = await getRecruiterFullNameAndFirstName(page);
-
-  console.log("whatisthis: " + whatisthis);
-  console.log("position: " + position);
-  console.log("company: " + company);
-  console.log("fullname: " + recruiterFullName);
-  console.log("firstname: " + recruiterFirstName);
 
   const cL = createCoverLetter(
     company,
