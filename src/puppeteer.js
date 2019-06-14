@@ -54,13 +54,13 @@ const createUpdatedJob = (
   domain
 ) => {
   // update recruiter, company, date, applied, position
-  const date = new Date();
+  // const date = new Date();
 
   job.recruiter = recruiterFullName;
   job.company = companyName;
   job.position = positionTitle;
   job.applied = "Yes";
-  job.date = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`;
+  // job.date = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`;
   job.domain = domain;
   return job;
 };
@@ -102,7 +102,7 @@ const getInfoAndApplyToJob = async (page, job) => {
 
   // await page.click(sendApplicationButton);
 
-  return createUpdatedJob(job, recruiterFullName);
+  return createUpdatedJob(job, recruiterFullName, company, position, domain);
 };
 
 const getInfoAndApplyToAllJobs = async (page, jobs) => {
