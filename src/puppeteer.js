@@ -71,10 +71,6 @@ const applyToJob = async (page, job) => {
     recruiterFirstName
   ] = await getRecruiterFullNameAndFirstName(page);
 
-  // const recruiterEmail = getRecruiterEmail(page, recruiterFullName, domain);
-
-  // console.log(recruiterEmail);
-
   const cL = createCoverLetter(
     company,
     position,
@@ -85,8 +81,6 @@ const applyToJob = async (page, job) => {
   await page.type(clTextArea, cL);
 
   // await page.click(sendApplicationButton);
-
-  // await updateSpreadsheetRow(page, recruiter, re);
 };
 
 const applyToAllJobs = async (page, jobs) => {
