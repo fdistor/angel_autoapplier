@@ -18,9 +18,16 @@ const logInUser = async page => {
 };
 
 const getTextContent = async (page, selector) => {
-  await page.waitForSelector(selector);
-  const element = await page.$(selector);
-  return await page.evaluate(element => element.textContent, element);
+  let text;
+
+  try {
+    await page.waitForSelector(selector);
+    const element = await page.$(selector);
+    text = page.evaluate(element => element.textContent, element);
+  } catch {
+    text = null;
+  }
+  return text;
 };
 
 const getPositionAndCompany = async page => {
@@ -94,8 +101,7 @@ const applyToAllJobs = async (page, jobs) => {
 
 const autoApply = async jobs => {
   const browser = await puppeteer.launch({
-    headless: false,
-    slowMo: 10
+    headless: false
   });
 
   const page = await browser.newPage();
