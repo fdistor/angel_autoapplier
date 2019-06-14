@@ -46,6 +46,25 @@ const getRecruiterFullNameAndFirstName = async page => {
   return [recruiterFullName, firstName];
 };
 
+const createUpdatedJob = (
+  job,
+  recruiterFullName,
+  companyName,
+  positionTitle,
+  domain
+) => {
+  // update recruiter, company, date, applied, position
+  const date = new Date();
+
+  job.recruiter = recruiterFullName;
+  job.company = companyName;
+  job.position = positionTitle;
+  job.applied = "Yes";
+  job.date = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`;
+  job.domain = domain;
+  return job;
+};
+
 const getDomainName = async page => {
   const domainElement = ".website-link";
 
@@ -78,21 +97,26 @@ const getInfoAndApplyToJob = async (page, job) => {
     myFullName,
     snippet
   );
+
   await page.type(clTextArea, cL);
 
   // await page.click(sendApplicationButton);
 
-  return;
+  return createUpdatedJob(job, recruiterFullName);
 };
 
 const getInfoAndApplyToAllJobs = async (page, jobs) => {
   const len = jobs.length;
   let i = 0;
+  let results = [];
 
   while (i < len) {
-    await getInfoAndApplyToJob(page, jobs[i]);
+    const updatedJob = await getInfoAndApplyToJob(page, jobs[i]);
+    results.push(updatedJob);
     i++;
   }
+
+  return results;
 };
 
 const autoApply = async jobs => {
@@ -103,14 +127,14 @@ const autoApply = async jobs => {
   const page = await browser.newPage();
 
   await logInUser(page);
-  await getInfoAndApplyToAllJobs(page, jobs);
+  const updatedJobs = await getInfoAndApplyToAllJobs(page, jobs);
 
   await page.waitFor(3000);
 
   // Close Browser once finished
   await browser.close();
 
-  return;
+  return updatedJobs;
 };
 
 module.exports = { autoApply };
