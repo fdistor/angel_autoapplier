@@ -59,14 +59,13 @@ const createUpdatedJob = (
   positionTitle,
   domain
 ) => {
-  // update recruiter, company, date, applied, position
   const date = new Date();
 
   job.recruiter = recruiterFullName;
   job.company = companyName;
   job.position = positionTitle;
   job.applied = "Yes";
-  job.date = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`;
+  job.date = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   job.domain = domain;
   return job;
 };
@@ -98,33 +97,33 @@ const getInfoAndApplyToJob = async (page, job) => {
 
   await page.goto(link);
 
-  // const domain = await getDomainName(page);
+  const domain = await getDomainName(page);
 
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
-  // const position = await getPositionTitle(page);
-  // const company = await getCompanyName(page);
+  const position = await getPositionTitle(page);
+  const company = await getCompanyName(page);
 
-  // console.log(position, company);
-  // const [
-  //   recruiterFullName,
-  //   recruiterFirstName
-  // ] = await getRecruiterFullNameAndFirstName(page);
+  console.log(position, company);
+  const [
+    recruiterFullName,
+    recruiterFirstName
+  ] = await getRecruiterFullNameAndFirstName(page);
 
-  // const cL = createCoverLetter(
-  //   company,
-  //   position,
-  //   recruiterFirstName,
-  //   myFullName,
-  //   snippet
-  // );
+  const cL = createCoverLetter(
+    company,
+    position,
+    recruiterFirstName,
+    myFullName,
+    snippet
+  );
 
-  // await page.type(clTextArea, cL);
+  await page.type(clTextArea, cL);
+  await page.click(sendApplicationButton);
+  await page.waitFor(1000);
 
-  // await page.click(sendApplicationButton);
-
-  // return createUpdatedJob(job, recruiterFullName);
+  return createUpdatedJob(job, recruiterFullName, company, position, domain);
 };
 
 const getInfoAndApplyToAllJobs = async (page, jobs) => {
@@ -152,9 +151,6 @@ const autoApply = async jobs => {
   await logInUser(page);
   const updatedJobs = await getInfoAndApplyToAllJobs(page, jobs);
 
-  await page.waitFor(3000);
-
-  // Close Browser once finished
   await browser.close();
 
   return updatedJobs;

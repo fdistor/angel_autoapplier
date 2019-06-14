@@ -13,12 +13,14 @@ module.exports = {
 
     const rows = await promisify(sheet.getRows)({
       offset: 1,
-      limit: 91,
+      limit: 120,
       query: "applied = No and haslink = TRUE"
     });
 
     return rows;
   },
 
-  updateSpreadsheetRow: async (page, recruiter) => {}
+  updateSpreadsheetRow: async job => {
+    await job.save();
+  }
 };
