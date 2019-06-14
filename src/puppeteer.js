@@ -52,18 +52,6 @@ const getDomainName = async page => {
   return await getTextContent(page, domainElement);
 };
 
-// const getRecruiterEmail = (fullName, domain) => {
-//   let email;
-//   if (domain) {
-//     const searchRecruiterEmail = new SearchRecruiterEmail(fullName, domain);
-//     searchRecruiterEmail.searchByDomain().then(data => (email = data));
-//   }
-
-//   return email ? email : null;
-// };
-
-const updateSpreadsheetRow = async (page, recruiter) => {};
-
 const applyToJob = async (page, job) => {
   const { link, snippet } = job;
   const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
