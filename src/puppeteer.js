@@ -30,10 +30,16 @@ const getTextContent = async (page, selector) => {
   return text;
 };
 
-const getPositionAndCompany = async page => {
-  const companyAndPositionElement = ".u-colorGray3";
+const getPositionTitle = async page => {
+  const positionElement = ".header_a3128";
 
-  return (await getTextContent(page, companyAndPositionElement)).split(" at ");
+  return await getTextContent(page, positionElement);
+};
+
+const getCompanyName = async page => {
+  const companyElement = ".anchor_73052";
+
+  return await getTextContent(page, companyElement);
 };
 
 const getRecruiterFullNameAndFirstName = async page => {
@@ -79,30 +85,33 @@ const getInfoAndApplyToJob = async (page, job) => {
 
   await page.goto(link);
 
-  const domain = await getDomainName(page);
+  // const domain = await getDomainName(page);
 
-  await page.waitForSelector(applyButton);
-  await page.click(applyButton);
+  // await page.waitForSelector(applyButton);
+  // await page.click(applyButton);
 
-  const [position, company] = await getPositionAndCompany(page);
-  const [
-    recruiterFullName,
-    recruiterFirstName
-  ] = await getRecruiterFullNameAndFirstName(page);
+  const position = await getPositionTitle(page);
+  const company = await getCompanyName(page);
 
-  const cL = createCoverLetter(
-    company,
-    position,
-    recruiterFirstName,
-    myFullName,
-    snippet
-  );
+  console.log(position, company);
+  // const [
+  //   recruiterFullName,
+  //   recruiterFirstName
+  // ] = await getRecruiterFullNameAndFirstName(page);
 
-  await page.type(clTextArea, cL);
+  // const cL = createCoverLetter(
+  //   company,
+  //   position,
+  //   recruiterFirstName,
+  //   myFullName,
+  //   snippet
+  // );
+
+  // await page.type(clTextArea, cL);
 
   // await page.click(sendApplicationButton);
 
-  return createUpdatedJob(job, recruiterFullName);
+  // return createUpdatedJob(job, recruiterFullName);
 };
 
 const getInfoAndApplyToAllJobs = async (page, jobs) => {
