@@ -1,6 +1,5 @@
 const puppeteer = require("puppeteer");
 const { user, password, myFullName } = require("../config/config.js");
-const SearchRecruiterEmail = require("./clearbit.js");
 const createCoverLetter = require("./coverLetter.js");
 
 const logInUser = async page => {
