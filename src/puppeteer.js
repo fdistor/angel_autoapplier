@@ -52,7 +52,7 @@ const getDomainName = async page => {
   return await getTextContent(page, domainElement);
 };
 
-const applyToJob = async (page, job) => {
+const getInfoAndApplyToJob = async (page, job) => {
   const { link, snippet } = job;
   const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
   const clTextArea = "textarea[name=note]";
@@ -81,14 +81,17 @@ const applyToJob = async (page, job) => {
   await page.type(clTextArea, cL);
 
   // await page.click(sendApplicationButton);
+
+  return;
 };
 
-const applyToAllJobs = async (page, jobs) => {
-  let i = jobs.length - 1;
+const getInfoAndApplyToAllJobs = async (page, jobs) => {
+  const len = jobs.length;
+  let i = 0;
 
-  while (i >= 0) {
-    await applyToJob(page, jobs[i]);
-    i--;
+  while (i < len) {
+    await getInfoAndApplyToJob(page, jobs[i]);
+    i++;
   }
 };
 
@@ -100,12 +103,14 @@ const autoApply = async jobs => {
   const page = await browser.newPage();
 
   await logInUser(page);
-  await applyToAllJobs(page, jobs);
+  await getInfoAndApplyToAllJobs(page, jobs);
 
   await page.waitFor(3000);
 
   // Close Browser once finished
   await browser.close();
+
+  return;
 };
 
 module.exports = { autoApply };
