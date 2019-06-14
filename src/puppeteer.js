@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const { user, password, myFullName } = require("../config/config.js");
+const SearchRecruiterEmail = require("./clearbit.js");
 const createCoverLetter = require("./coverLetter.js");
 
 const logInUser = async page => {
@@ -52,7 +53,15 @@ const getDomainName = async page => {
   return await getTextContent(page, domainElement);
 };
 
-const getRecruiterEmail = async (page, name, company) => {};
+// const getRecruiterEmail = (fullName, domain) => {
+//   let email;
+//   if (domain) {
+//     const searchRecruiterEmail = new SearchRecruiterEmail(fullName, domain);
+//     searchRecruiterEmail.searchByDomain().then(data => (email = data));
+//   }
+
+//   return email ? email : null;
+// };
 
 const updateSpreadsheetRow = async (page, recruiter) => {};
 
@@ -66,7 +75,6 @@ const applyToJob = async (page, job) => {
 
   const domain = await getDomainName(page);
 
-  console.log(domain);
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
@@ -75,6 +83,10 @@ const applyToJob = async (page, job) => {
     recruiterFullName,
     recruiterFirstName
   ] = await getRecruiterFullNameAndFirstName(page);
+
+  // const recruiterEmail = getRecruiterEmail(page, recruiterFullName, domain);
+
+  // console.log(recruiterEmail);
 
   const cL = createCoverLetter(
     company,
