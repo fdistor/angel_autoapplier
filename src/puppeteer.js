@@ -30,10 +30,16 @@ const getTextContent = async (page, selector) => {
   return text;
 };
 
-const getPositionAndCompany = async page => {
-  const companyAndPositionElement = ".u-colorGray3";
+const getPositionTitle = async page => {
+  const positionElement = ".header_a3128";
 
-  return (await getTextContent(page, companyAndPositionElement)).split(" at ");
+  return await getTextContent(page, positionElement);
+};
+
+const getCompanyName = async page => {
+  const companyElement = ".anchor_73052";
+
+  return await getTextContent(page, companyElement);
 };
 
 const getRecruiterFullNameAndFirstName = async page => {
@@ -65,14 +71,27 @@ const createUpdatedJob = (
 };
 
 const getDomainName = async page => {
-  const domainElement = ".website-link";
+  const domainParent = ".websiteLink_daf63";
+  let domain;
 
-  return await getTextContent(page, domainElement);
+  try {
+    await page.waitForSelector(domainParent);
+    const domainElement = await page.$eval(domainParent, parent => {
+      domain = parent.children[0].textContent;
+      console.log(parent.children);
+    });
+  } catch {
+    domain = null;
+  }
+
+  console.log(domain);
+
+  return domain;
 };
 
 const getInfoAndApplyToJob = async (page, job) => {
   const { link, snippet } = job;
-  const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
+  const applyButton = "applyButton_3b2db sidebar_f7e28";
   const clTextArea = "textarea[name=note]";
   const sendApplicationButton = ".fontello-paper-plane";
 
@@ -83,7 +102,10 @@ const getInfoAndApplyToJob = async (page, job) => {
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
-  const [position, company] = await getPositionAndCompany(page);
+  const position = await getPositionTitle(page);
+  const company = await getCompanyName(page);
+
+  console.log(position, company);
   const [
     recruiterFullName,
     recruiterFirstName
@@ -98,9 +120,8 @@ const getInfoAndApplyToJob = async (page, job) => {
   );
 
   await page.type(clTextArea, cL);
-
   await page.click(sendApplicationButton);
-  await page.waitFor(5000);
+  await page.waitFor(1000);
 
   return createUpdatedJob(job, recruiterFullName, company, position, domain);
 };
@@ -125,6 +146,7 @@ const autoApply = async jobs => {
   });
 
   const page = await browser.newPage();
+  page.setViewport({ height: 2560, width: 1600 });
 
   await logInUser(page);
   const updatedJobs = await getInfoAndApplyToAllJobs(page, jobs);
