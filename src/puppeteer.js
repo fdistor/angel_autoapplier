@@ -73,7 +73,7 @@ const getDomainName = async page => {
 
 const getInfoAndApplyToJob = async (page, job) => {
   const { link, snippet } = job;
-  const applyButton = ".buttons.js-apply.applicant-flow-dropdown";
+  const applyButton = "applyButton_3b2db sidebar_f7e28";
   const clTextArea = "textarea[name=note]";
   const sendApplicationButton = ".fontello-paper-plane";
 
