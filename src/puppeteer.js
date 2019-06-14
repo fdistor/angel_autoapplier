@@ -72,9 +72,22 @@ const createUpdatedJob = (
 };
 
 const getDomainName = async page => {
-  const domainElement = ".website-link";
+  const domainParent = ".websiteLink_daf63";
+  let domain;
 
-  return await getTextContent(page, domainElement);
+  try {
+    await page.waitForSelector(domainParent);
+    const domainElement = await page.$eval(domainParent, parent => {
+      domain = parent.children[0].textContent;
+      console.log(parent.children);
+    });
+  } catch {
+    domain = null;
+  }
+
+  console.log(domain);
+
+  return domain;
 };
 
 const getInfoAndApplyToJob = async (page, job) => {
@@ -87,13 +100,13 @@ const getInfoAndApplyToJob = async (page, job) => {
 
   // const domain = await getDomainName(page);
 
-  // await page.waitForSelector(applyButton);
-  // await page.click(applyButton);
+  await page.waitForSelector(applyButton);
+  await page.click(applyButton);
 
-  const position = await getPositionTitle(page);
-  const company = await getCompanyName(page);
+  // const position = await getPositionTitle(page);
+  // const company = await getCompanyName(page);
 
-  console.log(position, company);
+  // console.log(position, company);
   // const [
   //   recruiterFullName,
   //   recruiterFirstName
@@ -134,6 +147,7 @@ const autoApply = async jobs => {
   });
 
   const page = await browser.newPage();
+  page.setViewport({ height: 2560, width: 1600 });
 
   await logInUser(page);
   const updatedJobs = await getInfoAndApplyToAllJobs(page, jobs);
