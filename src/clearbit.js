@@ -8,19 +8,17 @@ class SearchRecruiterEmail {
   }
 
   searchByDomain() {
-    return clearbit.Prospector.search({
-      domain: this.domain,
-      name: this.fullName
-    }).then(persons => {
-      if (persons.results.length) {
-        return persons.results[0].email;
-      } else {
-        return null;
-      }
-    });
+    if (this.domain && this.fullName) {
+      return clearbit.Prospector.search({
+        domain: this.domain,
+        name: this.fullName
+      }).then(persons =>
+        persons.results.length ? persons.results[0].email : null
+      );
+    } else {
+      return null;
+    }
   }
-
-  searchByEmail() {}
 }
 
 module.exports = SearchRecruiterEmail;
