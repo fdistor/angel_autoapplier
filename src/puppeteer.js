@@ -53,14 +53,13 @@ const createUpdatedJob = (
   positionTitle,
   domain
 ) => {
-  // update recruiter, company, date, applied, position
-  // const date = new Date();
+  const date = new Date();
 
   job.recruiter = recruiterFullName;
   job.company = companyName;
   job.position = positionTitle;
   job.applied = "Yes";
-  // job.date = `${date.getMonth() + 1}/${date.getDay()}/${date.getFullYear()}`;
+  job.date = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   job.domain = domain;
   return job;
 };
@@ -100,7 +99,8 @@ const getInfoAndApplyToJob = async (page, job) => {
 
   await page.type(clTextArea, cL);
 
-  // await page.click(sendApplicationButton);
+  await page.click(sendApplicationButton);
+  await page.waitFor(5000);
 
   return createUpdatedJob(job, recruiterFullName, company, position, domain);
 };
@@ -129,9 +129,6 @@ const autoApply = async jobs => {
   await logInUser(page);
   const updatedJobs = await getInfoAndApplyToAllJobs(page, jobs);
 
-  await page.waitFor(3000);
-
-  // Close Browser once finished
   await browser.close();
 
   return updatedJobs;
