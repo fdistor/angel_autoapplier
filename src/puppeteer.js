@@ -30,16 +30,15 @@ const getTextContent = async (page, selector) => {
   return text;
 };
 
-const getPositionTitle = async page => {
-  const positionElement = ".header_a3128";
+const getCompanyAndPosition = async page => {
+  const header = ".u-colorGray3";
 
-  return await getTextContent(page, positionElement);
-};
+  const companyAndTitle = await getTextContent(page, header);
+  const split = companyAndTitle.split(" at ");
+  const position = split[0];
+  const company = split[1];
 
-const getCompanyName = async page => {
-  const companyElement = ".anchor_73052";
-
-  return await getTextContent(page, companyElement);
+  return [company, position];
 };
 
 const getRecruiterFullNameAndFirstName = async page => {
@@ -71,27 +70,14 @@ const createUpdatedJob = (
 };
 
 const getDomainName = async page => {
-  const domainParent = ".websiteLink_daf63";
-  let domain;
+  let domainElement = ".website-link";
 
-  try {
-    await page.waitForSelector(domainParent);
-    const domainElement = await page.$eval(domainParent, parent => {
-      domain = parent.children[0].textContent;
-      console.log(parent.children);
-    });
-  } catch {
-    domain = null;
-  }
-
-  console.log(domain);
-
-  return domain;
+  return await getTextContent(page, domainElement);
 };
 
 const getInfoAndApplyToJob = async (page, job) => {
   const { link, snippet } = job;
-  const applyButton = "applyButton_3b2db sidebar_f7e28";
+  const applyButton = ".c-button.c-button--blue";
   const clTextArea = "textarea[name=note]";
   const sendApplicationButton = ".fontello-paper-plane";
 
@@ -102,10 +88,8 @@ const getInfoAndApplyToJob = async (page, job) => {
   await page.waitForSelector(applyButton);
   await page.click(applyButton);
 
-  const position = await getPositionTitle(page);
-  const company = await getCompanyName(page);
+  const [position, company] = await getCompanyAndPosition(page);
 
-  console.log(position, company);
   const [
     recruiterFullName,
     recruiterFirstName
@@ -119,8 +103,9 @@ const getInfoAndApplyToJob = async (page, job) => {
     snippet
   );
 
+  await page.waitFor(".container");
   await page.type(clTextArea, cL);
-  await page.click(sendApplicationButton);
+  // await page.click(sendApplicationButton);
   await page.waitFor(1000);
 
   return createUpdatedJob(job, recruiterFullName, company, position, domain);
