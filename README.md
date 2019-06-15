@@ -26,9 +26,9 @@ _and **NOT** look like this_
 
 ![New UI](https://i.imgur.com/XNRqL9X.png)
 
-### Getting a Google Drive API Key
+### Getting a Google Drive API Key and Enabling Access For This Project
 
-For a video, check out [Twilio's tutorial](https://youtu.be/UGN6EUi4Yio?t=14) until around 1:30
+For a video, check out [Twilio's tutorial](https://youtu.be/UGN6EUi4Yio?t=14) until 2:30.
 
 1. Visit the [Google APIs Console](https://console.developers.google.com/)
 1. Sign into your Google profile
@@ -47,6 +47,9 @@ For a video, check out [Twilio's tutorial](https://youtu.be/UGN6EUi4Yio?t=14) un
 1. Leave the **Key type** as **JSON**
 1. Click on **CONTINUE** and your API key will be downloaded
 1. Move this json file to the project folder under the `keys` folder and rename it to `client_secret.json`
+1. In `client_secret.json`, copy the `client_email` value
+1. Visit your Google Sheet and click on **SHARE** in the top right corner
+1. In the **People** input text box, paste the `client_email` value you copied and click **Send**
 
 ### Getting a Clearbit API Key
 
@@ -91,7 +94,10 @@ From,
 ```
 
 _Optional: If you don't want a Chromium browser to pop up, go to `src/puppeteer.js` and edit the function `autoApply`
-at the very bottom and change the parameter `headless` to `true`.
+at the very bottom and change the value of the key `headless` from `false` to `true`._
+
+1. In a terminal while at the root of the project, type `npm run apply`.
+
 
 ## Built With
 
