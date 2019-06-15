@@ -44,6 +44,8 @@ For text based directions, click [here](https://github.com/fdistor/angel_autoapp
 
 This project requires specific columns for your Google Sheet so you can copy this [Sheet](https://docs.google.com/spreadsheets/d/18RXGQy3v7jEDDOS50eFLO0TiulMijNyv9DGprSmkeyU/edit#gid=0) to ensure you have the correct columns.
 
+**If you are creating your own Google Sheet, ensure the jobs you want to apply to are in the FIRST spreadsheet.**
+
 To get the ID, in your Google Sheet URL, the ID follows after `/d/` and before `/edit#gid=0`.
 
 For example, 
