@@ -1,6 +1,6 @@
 module.exports = {
   sheetsId: "",
-  user: "",
-  password: "",
-  myFullName: ""
+  user: "user@email.com",
+  password: "password",
+  myFullName: "Hello World"
 };
