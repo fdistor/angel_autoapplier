@@ -13,11 +13,10 @@ update your Google sheet with the company name, position title, recruiter name a
 ## Prerequisites
 
 - Node
-- Chromium
 - AngelList account
+- Google Sheet that you own and its ID
 - Google Drive API Key
 - Clearbit API Key
-- Google Sheet that you own and its ID
 
 _Note: Your Angel UI **MUST** look like this_
 ![Old UI](https://i.imgur.com/xRnM1co.png)
@@ -26,19 +25,6 @@ _and **NOT** look like this_
 
 ![New UI](https://i.imgur.com/XNRqL9X.png)
 
-### Getting a Google Drive API Key and Enabling Access For This Project
-
-For a video, check out [Twilio's tutorial](https://youtu.be/UGN6EUi4Yio?t=14) until 2:30.
-
-For text based directions, click [here](https://github.com/fdistor/angel_autoapplier/tree/master/readme).
-
-### Getting a Clearbit API Key
-
-1. [Sign up](https://clearbit.com/signup) for a Clearbit account if you don't have one 
-1. Visit the [Clearbit Console](https://dashboard.clearbit.com/)
-1. Click on **API** on the side dashboard
-1. Copy the **__secret API key__** and paste it between the quotation marks in the file `clearbit_key.example.js` under the `keys` folder
-1. **MAKE SURE TO RENAME `clearbit_key.example.js` TO `clearbit_key.js`**
 
 ### Google Sheet and ID
 
@@ -53,6 +39,19 @@ For example,
 
 Copy and paste this ID in the `sheetsID` parameter in `config/config.js`.
 
+### Getting a Google Drive API Key and Enabling Access For This Project
+
+For a video, check out [Twilio's tutorial](https://youtu.be/UGN6EUi4Yio?t=14) until 2:30.
+
+For text based directions, click [here](https://github.com/fdistor/angel_autoapplier/tree/master/readme).
+
+### Getting a Clearbit API Key
+
+1. [Sign up](https://clearbit.com/signup) for a Clearbit account if you don't have one 
+1. Visit the [Clearbit Console](https://dashboard.clearbit.com/)
+1. Click on **API** on the side dashboard
+1. Copy the **__secret API key__** and paste it between the quotation marks in the file `clearbit_key.example.js` under the `keys` folder
+1. **MAKE SURE TO RENAME `clearbit_key.example.js` TO `clearbit_key.js`**
 
 ## Running the Program
 
@@ -110,4 +109,4 @@ into JavaScript.
 
 ## Acknowledgments
 
-* [Albert Tu](https://github.com/AlbertLapTu) for giving it a try
+- [Albert Tu](https://github.com/AlbertLapTu) for giving it a try
