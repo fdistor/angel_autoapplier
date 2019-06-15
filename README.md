@@ -6,7 +6,7 @@ This is a node application intended to automatically apply to jobs for you on An
 you own and visit the Angel job URLs. It will scrape the company name, position title, recruiter name and use these along with
 your provided cover letter to type a cover letter and send the application. It will then look up the recruiter's email. It willupdate your Google sheet with the company name, position title, recruiter name and e-mail, date applied, and that you did apply.
 
-![Check out the full demo](https://youtu.be/h60e014AXtQ)
+[Check out the full demo](https://youtu.be/h60e014AXtQ)
 ## Installing
 
 1. Clone this repo to your computer
