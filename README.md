@@ -1,10 +1,12 @@
 # AngelList Auto Applier
 
+![Demo](https://media.giphy.com/media/gH8m2AHvrdlccpyH6n/giphy.gif)
+
 This is a node application intended to automatically apply to jobs for you on AngelList. This will access a Google Sheet that
 you own and visit the Angel job URLs. It will scrape the company name, position title, recruiter name and use these along with
-your provided cover letter to type a cover letter and send the application. It will then look up the recruiter's email. It will
-update your Google sheet with the company name, position title, recruiter name and e-mail, date applied, and that you did apply.
+your provided cover letter to type a cover letter and send the application. It will then look up the recruiter's email. It willupdate your Google sheet with the company name, position title, recruiter name and e-mail, date applied, and that you did apply.
 
+![Check out the full demo](https://youtu.be/h60e014AXtQ)
 ## Installing
 
 1. Clone this repo to your computer
@@ -100,7 +102,6 @@ into JavaScript.
 
 ## Need to do
 
-- Add video or gif of this in action
 - Error handling when a job data do not exist
 - Error handling when URL is not valid
 - Give user option to not input a cover letter and handle if scenario where a job requires a cover letter
