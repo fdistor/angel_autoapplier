@@ -38,7 +38,7 @@ const getCompanyAndPosition = async page => {
   const position = split[0];
   const company = split[1];
 
-  return [company, position];
+  return [position, company];
 };
 
 const getRecruiterFullNameAndFirstName = async page => {
@@ -105,7 +105,7 @@ const getInfoAndApplyToJob = async (page, job) => {
 
   await page.waitFor(".container");
   await page.type(clTextArea, cL);
-  // await page.click(sendApplicationButton);
+  await page.click(sendApplicationButton);
   await page.waitFor(1000);
 
   return createUpdatedJob(job, recruiterFullName, company, position, domain);
@@ -127,7 +127,8 @@ const getInfoAndApplyToAllJobs = async (page, jobs) => {
 
 const autoApply = async jobs => {
   const browser = await puppeteer.launch({
-    headless: false
+    headless: false,
+    slowMo: 30
   });
 
   const page = await browser.newPage();
