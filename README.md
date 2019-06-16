@@ -63,7 +63,7 @@ Given you completed the Prerequisites of this project, you need to edit two file
 - `user` to be your email for AngelList (e.g. `hello@world.com`)
 - `password` to be your password for AngelList
 - `myFullName` to be your name since this will show up in the cover letter
-1. In `src/coverLetter.js`, edit the `coverLetter` variable to your desired cover letter. 
+2. In `src/coverLetter.js`, edit the `coverLetter` variable to your desired cover letter. 
 - If you don't want to include a snippet about the company, don't use the snippet variable in your cover letter
 - Currently, the example cover letter will look like this (where the items in between brackets will be replaced what data scraped from the job posting):
 
@@ -80,7 +80,7 @@ From,
 _Optional: If you don't want a Chromium browser to pop up, go to `src/puppeteer.js` and edit the function `autoApply`
 at the very bottom and change the value of the key `headless` from `false` to `true`._
 
-1. In a terminal while at the root of the project, type `npm run apply`.
+3. In a terminal while at the root of the project, type `npm run apply`.
 
 
 ## Built With
@@ -102,10 +102,11 @@ into JavaScript.
 
 ## Need to do
 
-- Error handling when a job data do not exist
+- Error handling when job data does not exist
 - Error handling when URL is not valid
 - Give user option to not input a cover letter and handle if scenario where a job requires a cover letter
 - Input the cover letter value than type it out
+- Send follow-up emails after a week (or user specified)
 
 
 ## Acknowledgments
