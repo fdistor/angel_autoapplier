@@ -25,7 +25,7 @@ const getTextContent = async (page, selector) => {
     const element = await page.$(selector);
     text = page.evaluate(element => element.textContent, element);
   } catch {
-    text = null;
+    text = "";
   }
   return text;
 };
@@ -44,7 +44,9 @@ const getCompanyAndPosition = async page => {
 const getRecruiterFullNameAndFirstName = async page => {
   const recruiterElement = ".name";
 
-  const recruiterFullName = await getTextContent(page, recruiterElement);
+  const recruiterFullName = await getTextContent(page, recruiterElement).catch(
+    () => ""
+  );
   const recruiterNameArray = recruiterFullName.split(" ");
   const firstName = recruiterNameArray[0];
 
@@ -63,7 +65,7 @@ const createUpdatedJob = (
   job.recruiter = recruiterFullName;
   job.company = companyName;
   job.position = positionTitle;
-  job.applied = "Yes";
+  // job.applied = "Yes";
   // job.date = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   job.domain = domain;
   return job;
@@ -85,7 +87,7 @@ const getInfoAndApplyToJob = async (page, job) => {
 
   const domain = await getDomainName(page);
 
-  await page.waitForSelector(applyButton);
+  await page.waitForSelector(applyButton).catch(() => null);
   await page.click(applyButton);
 
   const [position, company] = await getCompanyAndPosition(page);
@@ -126,7 +128,7 @@ const getInfoAndApplyToAllJobs = async (page, jobs) => {
 };
 
 const autoApply = async jobs => {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: false, slowMo: 5 });
 
   const page = await browser.newPage();
   // page.setViewport({ height: 2560, width: 1600 });
