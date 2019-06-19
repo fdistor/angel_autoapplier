@@ -16,6 +16,6 @@ const applyToAngel = async () => {
   }
 };
 
-// applyToAngel();
+applyToAngel();
 // const s = new SearchRecruiterEmail("gpueater.com", "Aiko Watabe");
 // const email = s.searchByDomain().then(data => console.log(data));
