@@ -58,13 +58,13 @@ const createUpdatedJob = (
   positionTitle,
   domain
 ) => {
-  const date = new Date();
+  // const date = new Date();
 
   job.recruiter = recruiterFullName;
   job.company = companyName;
   job.position = positionTitle;
   job.applied = "Yes";
-  job.date = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  // job.date = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   job.domain = domain;
   return job;
 };
@@ -95,18 +95,18 @@ const getInfoAndApplyToJob = async (page, job) => {
     recruiterFirstName
   ] = await getRecruiterFullNameAndFirstName(page);
 
-  const cL = createCoverLetter(
-    company,
-    position,
-    recruiterFirstName,
-    myFullName,
-    snippet
-  );
+  // const cL = createCoverLetter(
+  //   company,
+  //   position,
+  //   recruiterFirstName,
+  //   myFullName,
+  //   snippet
+  // );
 
-  await page.waitFor(".container");
-  await page.type(clTextArea, cL);
-  await page.click(sendApplicationButton);
-  await page.waitFor(1000);
+  // await page.waitFor(".container");
+  // await page.type(clTextArea, cL);
+  // await page.click(sendApplicationButton);
+  // await page.waitFor(1000);
 
   return createUpdatedJob(job, recruiterFullName, company, position, domain);
 };
@@ -126,13 +126,10 @@ const getInfoAndApplyToAllJobs = async (page, jobs) => {
 };
 
 const autoApply = async jobs => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    slowMo: 30
-  });
+  const browser = await puppeteer.launch({ headless: false });
 
   const page = await browser.newPage();
-  page.setViewport({ height: 2560, width: 1600 });
+  // page.setViewport({ height: 2560, width: 1600 });
 
   await logInUser(page);
   const updatedJobs = await getInfoAndApplyToAllJobs(page, jobs);
