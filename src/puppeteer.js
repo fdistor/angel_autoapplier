@@ -67,6 +67,7 @@ const createUpdatedJob = (
   job.position = positionTitle;
   // job.applied = "Yes";
   // job.date = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  job.scraped = "Yes";
   job.domain = domain;
   return job;
 };
