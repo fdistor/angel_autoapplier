@@ -57,7 +57,7 @@ For text based directions, click [here](https://github.com/fdistor/angel_autoapp
 
 ## Running the Program
 
-Given you completed the Prerequisites of this project, you need to edit two files before you can run this app.
+Given you completed the Prerequisites of this project, you need to edit two files before you can run this app. **This app must  not be run headless otherwise AngelList will detect you are a bot.**
 
 1. In `config/config.example.js`, edit the file name to be `config.js` and edit the following parameters:
 - `user` to be your email for AngelList (e.g. `hello@world.com`)
@@ -65,7 +65,7 @@ Given you completed the Prerequisites of this project, you need to edit two file
 - `myFullName` to be your name since this will show up in the cover letter
 2. In `src/coverLetter.js`, edit the `coverLetter` variable to your desired cover letter. 
 - If you don't want to include a snippet about the company, don't use the snippet variable in your cover letter
-- Currently, the example cover letter will look like this (where the items in between brackets will be replaced what data scraped from the job posting):
+- Currently, the example cover letter will look like this (where the items in between brackets will be replaced with data scraped from the job posting):
 
 ```
 Hi [Recruiter name],
@@ -76,9 +76,6 @@ From,
 
 [Your Name]
 ```
-
-_Optional: If you don't want a Chromium browser to pop up, go to `src/puppeteer.js` and edit the function `autoApply`
-at the very bottom and change the value of the key `headless` from `false` to `true`._
 
 3. In a terminal while at the root of the project, type `npm run apply`.
 
@@ -104,8 +101,8 @@ into JavaScript.
 
 - Error handling when job data does not exist
 - Error handling when URL is not valid
-- Give user option to not input a cover letter and handle if scenario where a job requires a cover letter
-- Input the cover letter value than type it out
+- Give user option to not input a cover letter and handle scenario where a job requires a cover letter
+- Input the cover letter value than type it out (speeds up the process)
 - Send follow-up emails after a week (or user specified)
 
 
