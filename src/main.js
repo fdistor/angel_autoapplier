@@ -1,6 +1,6 @@
-const sheets = require("./spreadsheet.js");
-const auto = require("./puppeteer");
-const SearchRecruiterEmail = require("./clearbit");
+const sheets = require('./spreadsheet.js');
+const auto = require('./puppeteer');
+const SearchRecruiterEmail = require('./clearbit');
 
 const applyToAngel = async () => {
   const jobs = await sheets.accessSpreadsheet();
@@ -16,9 +16,4 @@ const applyToAngel = async () => {
   }
 };
 
-const email = "";
-const name = "";
-
-// applyToAngel();
-const s = new SearchRecruiterEmail(email, name);
-const email = s.searchByDomain().then(data => console.log(data));
+applyToAngel();
