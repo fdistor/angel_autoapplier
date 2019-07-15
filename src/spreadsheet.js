@@ -14,7 +14,7 @@ module.exports = {
     const rows = await promisify(sheet.getRows)({
       offset: 1,
       limit: 120,
-      query: "applied = No and haslink = TRUE"
+      query: "scraped = No and haslink = TRUE"
     });
 
     return rows;

@@ -1,12 +1,12 @@
-const puppeteer = require("puppeteer");
-const { user, password, myFullName } = require("../config/config.js");
-const createCoverLetter = require("./coverLetter.js");
+const puppeteer = require('puppeteer');
+const { user, password, myFullName } = require('../config/config.js');
+const createCoverLetter = require('./coverLetter.js');
 
 const logInUser = async page => {
-  const loginPage = "https://angel.co/login";
-  const emailBox = "#user_email";
-  const passwordBox = "#user_password";
-  const submitButton = ".c-button";
+  const loginPage = 'https://angel.co/login';
+  const emailBox = '#user_email';
+  const passwordBox = '#user_password';
+  const submitButton = '.c-button';
 
   await page.goto(loginPage);
   await page.waitForSelector(emailBox);
@@ -14,7 +14,7 @@ const logInUser = async page => {
   await page.waitForSelector(passwordBox);
   await page.type(passwordBox, password);
   await page.click(submitButton);
-  await page.waitForNavigation({ waitUntil: "networkidle2" });
+  // await page.waitForNavigation({ waitUntil: "networkidle2" });
 };
 
 const getTextContent = async (page, selector) => {
@@ -25,16 +25,16 @@ const getTextContent = async (page, selector) => {
     const element = await page.$(selector);
     text = page.evaluate(element => element.textContent, element);
   } catch {
-    text = null;
+    text = '';
   }
   return text;
 };
 
 const getCompanyAndPosition = async page => {
-  const header = ".u-colorGray3";
+  const header = '.u-colorGray3';
 
   const companyAndTitle = await getTextContent(page, header);
-  const split = companyAndTitle.split(" at ");
+  const split = companyAndTitle.split(' at ');
   const position = split[0];
   const company = split[1];
 
@@ -42,10 +42,12 @@ const getCompanyAndPosition = async page => {
 };
 
 const getRecruiterFullNameAndFirstName = async page => {
-  const recruiterElement = ".name";
+  const recruiterElement = '.name';
 
-  const recruiterFullName = await getTextContent(page, recruiterElement);
-  const recruiterNameArray = recruiterFullName.split(" ");
+  const recruiterFullName = await getTextContent(page, recruiterElement).catch(
+    () => ''
+  );
+  const recruiterNameArray = recruiterFullName.split(' ');
   const firstName = recruiterNameArray[0];
 
   return [recruiterFullName, firstName];
@@ -63,29 +65,40 @@ const createUpdatedJob = (
   job.recruiter = recruiterFullName;
   job.company = companyName;
   job.position = positionTitle;
-  job.applied = "Yes";
+  job.applied = 'Yes';
   job.date = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  job.scraped = 'Yes';
   job.domain = domain;
   return job;
 };
 
 const getDomainName = async page => {
-  let domainElement = ".website-link";
+  let domainElement = '.website-link';
 
   return await getTextContent(page, domainElement);
 };
 
+const pasteCL = async (page, coverLetter, selector) => {
+  await page.$eval(
+    selector,
+    (element, cl) => (element.value = cl),
+    coverLetter
+  );
+};
+
 const getInfoAndApplyToJob = async (page, job) => {
   const { link, snippet } = job;
-  const applyButton = ".c-button.c-button--blue";
-  const clTextArea = "textarea[name=note]";
-  const sendApplicationButton = ".fontello-paper-plane";
+  const applyButton =
+    '.c-button.c-button--blue.c-button--lg.c-button--lg.js-interested-button';
+  const clTextArea = 'textarea[name=note]';
+  const sendApplicationButton = '.fontello-paper-plane';
 
   await page.goto(link);
 
   const domain = await getDomainName(page);
 
-  await page.waitForSelector(applyButton);
+  await page.waitForSelector(applyButton).catch(() => null);
+  await page.waitFor(200);
   await page.click(applyButton);
 
   const [position, company] = await getCompanyAndPosition(page);
@@ -103,10 +116,9 @@ const getInfoAndApplyToJob = async (page, job) => {
     snippet
   );
 
-  await page.waitFor(".container");
-  await page.type(clTextArea, cL);
+  await page.waitFor('.container');
+  await pasteCL(page, cL, clTextArea);
   await page.click(sendApplicationButton);
-  await page.waitFor(1000);
 
   return createUpdatedJob(job, recruiterFullName, company, position, domain);
 };
@@ -126,15 +138,11 @@ const getInfoAndApplyToAllJobs = async (page, jobs) => {
 };
 
 const autoApply = async jobs => {
-  const browser = await puppeteer.launch({
-    headless: false,
-    slowMo: 30
-  });
-
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
-  page.setViewport({ height: 2560, width: 1600 });
 
   await logInUser(page);
+
   const updatedJobs = await getInfoAndApplyToAllJobs(page, jobs);
 
   await browser.close();
