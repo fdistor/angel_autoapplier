@@ -14,7 +14,6 @@ const logInUser = async page => {
   await page.waitForSelector(passwordBox);
   await page.type(passwordBox, password);
   await page.click(submitButton);
-  // await page.waitForNavigation({ waitUntil: "networkidle2" });
 };
 
 const getTextContent = async (page, selector) => {
@@ -118,6 +117,7 @@ const getInfoAndApplyToJob = async (page, job) => {
 
   await page.waitFor('.container');
   await pasteCL(page, cL, clTextArea);
+  await page.type(clTextArea, ' ');
   await page.click(sendApplicationButton);
 
   return createUpdatedJob(job, recruiterFullName, company, position, domain);

@@ -1,8 +1,8 @@
-const GoogleSpreadsheet = require("google-spreadsheet");
-const { promisify } = require("util");
-const { sheetsId } = require("../config/config.js");
+const GoogleSpreadsheet = require('google-spreadsheet');
+const { promisify } = require('util');
+const { sheetsId } = require('../config/config.js');
 
-const creds = require("../keys/client_secret.json");
+const creds = require('../keys/client_secret.json');
 
 module.exports = {
   accessSpreadsheet: async () => {
@@ -14,7 +14,7 @@ module.exports = {
     const rows = await promisify(sheet.getRows)({
       offset: 1,
       limit: 120,
-      query: "scraped = No and haslink = TRUE"
+      query: 'applied = No and haslink = TRUE'
     });
 
     return rows;
