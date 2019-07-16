@@ -110,7 +110,7 @@ const getInfoAndApplyToJob = async (page, job) => {
   const cL = createCoverLetter(
     company,
     position,
-    recruiterFirstName,
+    recruiterFirstName[0].toUpperCase() + recruiterFirstName.slice(1),
     myFullName,
     snippet
   );
