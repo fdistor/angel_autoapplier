@@ -40,6 +40,10 @@ const getCompanyAndPosition = async page => {
   return [position, company];
 };
 
+const capitalizeFirstLetter = name => {
+  return name ? name[0].toUpperCase() + name.slice(1) : name;
+};
+
 const getRecruiterFullNameAndFirstName = async page => {
   const recruiterElement = '.name';
 
@@ -47,9 +51,12 @@ const getRecruiterFullNameAndFirstName = async page => {
     () => ''
   );
   const recruiterNameArray = recruiterFullName.split(' ');
-  const firstName = recruiterNameArray[0];
+  const recruiterName = recruiterNameArray
+    .map(name => capitalizeFirstLetter(name))
+    .join(' ');
+  const firstName = capitalizeFirstLetter(recruiterNameArray[0]);
 
-  return [recruiterFullName, firstName];
+  return [recruiterName, firstName];
 };
 
 const createUpdatedJob = (
@@ -110,7 +117,7 @@ const getInfoAndApplyToJob = async (page, job) => {
   const cL = createCoverLetter(
     company,
     position,
-    recruiterFirstName[0].toUpperCase() + recruiterFirstName.slice(1),
+    recruiterFirstName,
     myFullName,
     snippet
   );
