@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/*.js",
-    "apply": "node src/main.js"
+    "apply": "node src/main.js",
+    "find": "node src/findRecruiter.js"
   },
   "repository": {
     "type": "git",
