@@ -1,5 +1,5 @@
-const clearBitKey = require("../keys/clearbit_key.js");
-const clearbit = require("clearbit")(clearBitKey);
+const clearBitKey = require('../keys/clearbit_key.js');
+const clearbit = require('clearbit')(clearBitKey);
 
 class SearchRecruiterEmail {
   constructor(domain, fullName) {
@@ -7,7 +7,7 @@ class SearchRecruiterEmail {
     this.fullName = fullName;
   }
 
-  searchByDomain() {
+  async searchByDomain() {
     if (this.domain && this.fullName) {
       return clearbit.Prospector.search({
         domain: this.domain,
