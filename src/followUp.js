@@ -28,7 +28,10 @@ export default class FollowUp {
 		};
 	}
 
-	followUpOneJob(job) {}
+	async followUpOneJob(job) {
+		const { email, position, recruiter } = job;
+		const options = this.createOptions(email, position);
+	}
 
 	followUpAllJobs(jobs) {
 		jobs.forEach(job => this.followUpOneJob);
