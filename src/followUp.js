@@ -1,4 +1,4 @@
-const { gmailUser, gmailPassword } = require('../config/config.js');
+const { gmailUser, gmailPassword, myFullName } = require('../config/config.js');
 const options = {
 	user: gmailUser,
 	pass: gmailPassword,
@@ -15,5 +15,22 @@ export default class FollowUp {
 	constructor(jobs) {
 		this.jobs = jobs;
 		this.updatedJobs = null;
+	}
+
+	createOptions(email, position) {
+		const subject = `${position} - ${myFullName} application`;
+
+		return {
+			user: gmailUser,
+			pass: gmailPassword,
+			to: email,
+			subject
+		};
+	}
+
+	followUpOneJob(job) {}
+
+	followUpAllJobs(jobs) {
+		jobs.forEach(job => this.followUpOneJob);
 	}
 }
