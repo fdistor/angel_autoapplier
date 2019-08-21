@@ -7,11 +7,11 @@ const options = {
 };
 const send = require('gmail-send')(options);
 
-send({ text: 'test' })
-	.then(result => console.log(result))
-	.catch(err => console.error('Error:', err));
+// send({ text: 'test' })
+// 	.then(result => console.log(result))
+// 	.catch(err => console.error('Error:', err));
 
-export default class FollowUp {
+class FollowUp {
 	constructor(jobs) {
 		this.jobs = jobs;
 		this.updatedJobs = null;
@@ -28,6 +28,17 @@ export default class FollowUp {
 		};
 	}
 
+	createLetter(firstName, date, position, company) {
+		return `Hi ${firstName},\n\n\
+I hope this finds you well! I recently applied through AngelList on ${date} for the ${position} \
+position, but I have not yet heard back. I understand you are busy so I wanted to follow up on my \
+application and reiterate my interest in ${company}.\n\n\
+Thank you for your time and consideration and I look forward to hearing back!\n\n\
+Best,\n\n\
+${myFullName}
+`;
+	}
+
 	getFirstName(fullName) {
 		return fullName.split(' ')[0];
 	}
@@ -41,3 +52,8 @@ export default class FollowUp {
 		jobs.forEach(job => this.followUpOneJob);
 	}
 }
+
+const ne = new FollowUp();
+console.log(
+	ne.createLetter('Yasmine', 'Aug 11', 'Software Engineer', 'Google')
+);
