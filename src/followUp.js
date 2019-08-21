@@ -1,4 +1,4 @@
-class FollowUp {
+module.exports = class FollowUp {
 	constructor(jobs) {
 		this.jobs = jobs;
 		this.updatedJobs = null;
@@ -71,4 +71,4 @@ ${myFullName}
 
     return jobs;
 	}
-}
+};
