@@ -28,6 +28,10 @@ export default class FollowUp {
 		};
 	}
 
+	getFirstName(fullName) {
+		return fullName.split(' ')[0];
+	}
+
 	async followUpOneJob(job) {
 		const { email, position, recruiter } = job;
 		const options = this.createOptions(email, position);
