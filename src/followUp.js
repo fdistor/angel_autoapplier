@@ -7,8 +7,6 @@ const options = {
 };
 const send = require('gmail-send')(options);
 
-send({
-	text: 'test'
-})
+send({ text: 'test' })
 	.then(result => console.log(result))
 	.catch(err => console.error('Error:', err));
