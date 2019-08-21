@@ -51,7 +51,7 @@ ${myFullName}
 		return fullName.split(' ')[0];
 	}
 
-	followUpOneJob(job) {
+	async followUpOneJob(job) {
 		const { email, position, recruiter, date, company } = job;
 		const options = this.createOptions(email, position);
 		const splitDate = date.split('/');
@@ -60,19 +60,24 @@ ${myFullName}
 		const text = this.createLetter(firstName, dateString, position, company);
 
 		const send = require('gmail-send')(options);
-		send({ text })
-			.then(() => {
-				job.followup = 'No';
-				job.status = 'Followed Up';
-			})
-			.catch(err => console.log(err));
+		await send({ text });
+
+		job.followup = 'No';
+		job.status = 'Followed Up';
 
 		console.log(job);
+
+		return job;
 	}
 
 	async followUpAllJobs() {
-		this.jobs.forEach(job => this.followUpOneJob(job));
+		const results = [];
 
-		return this.jobs;
+		for (let i = 0; i < this.jobs.length; i++) {
+			const updatedJob = await this.followUpOneJob(this.jobs[i]);
+			results.push(updatedJob);
+		}
+
+		return results;
 	}
 };
