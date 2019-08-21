@@ -80,6 +80,8 @@ ${myFullName}
 	}
 
 	followUpAllJobs(jobs) {
-		jobs.forEach(job => this.followUpOneJob);
+    jobs.forEach(job => await this.followUpOneJob(job));
+    
+    return jobs;
 	}
 }
