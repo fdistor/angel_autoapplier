@@ -1,3 +1,5 @@
+const { gmailUser, gmailPassword, myFullName } = require('../config/config.js');
+
 module.exports = class FollowUp {
 	constructor(jobs) {
 		this.jobs = jobs;
@@ -49,7 +51,7 @@ ${myFullName}
 		return fullName.split(' ')[0];
 	}
 
-	async followUpOneJob(job) {
+	followUpOneJob(job) {
 		const { email, position, recruiter, date, company } = job;
 		const options = this.createOptions(email, position);
 		const splitDate = date.split('/');
@@ -64,11 +66,13 @@ ${myFullName}
 				job.status = 'Followed Up';
 			})
 			.catch(err => console.log(err));
+
+		console.log(job);
 	}
 
-	followUpAllJobs() {
-    this.jobs.forEach(job => await this.followUpOneJob(job));
+	async followUpAllJobs() {
+		this.jobs.forEach(job => this.followUpOneJob(job));
 
-    return this.jobs;
+		return this.jobs;
 	}
 };
