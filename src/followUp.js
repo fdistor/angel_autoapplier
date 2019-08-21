@@ -69,6 +69,14 @@ ${myFullName}
 		const dateString = `${this.getMonth(splitDate[0])} ${splitDate[1]}`;
 		const firstName = this.getFirstName(recruiter);
 		const text = this.createLetter(firstName, dateString, position, company);
+
+		const send = require('gmail-send')(options);
+		send({ text })
+			.then(() => {
+				job.followup = 'No';
+				job.status = 'Followed Up';
+			})
+			.catch(err => console.log(err));
 	}
 
 	followUpAllJobs(jobs) {
