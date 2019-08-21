@@ -63,16 +63,15 @@ ${myFullName}
 	}
 
 	async followUpOneJob(job) {
-		const { email, position, recruiter } = job;
+		const { email, position, recruiter, date, company } = job;
 		const options = this.createOptions(email, position);
+		const splitDate = date.split('/');
+		const dateString = `${this.getMonth(splitDate[0])} ${splitDate[1]}`;
+		const firstName = this.getFirstName(recruiter);
+		const text = this.createLetter(firstName, dateString, position, company);
 	}
 
 	followUpAllJobs(jobs) {
 		jobs.forEach(job => this.followUpOneJob);
 	}
 }
-
-const ne = new FollowUp();
-console.log(
-	ne.createLetter('Yasmine', 'Aug 11', 'Software Engineer', 'Google')
-);
