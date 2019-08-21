@@ -66,9 +66,9 @@ ${myFullName}
 			.catch(err => console.log(err));
 	}
 
-	followUpAllJobs(jobs) {
-    jobs.forEach(job => await this.followUpOneJob(job));
+	followUpAllJobs() {
+    this.jobs.forEach(job => await this.followUpOneJob(job));
 
-    return jobs;
+    return this.jobs;
 	}
 };
