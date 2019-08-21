@@ -65,8 +65,6 @@ ${myFullName}
 		job.followup = 'No';
 		job.status = 'Followed Up';
 
-		console.log(job);
-
 		return job;
 	}
 
