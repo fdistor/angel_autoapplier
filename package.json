@@ -6,7 +6,8 @@
 	"scripts": {
 		"test": "mocha test/*.js",
 		"apply": "node src/applyToJobs.js",
-		"find": "node src/findRecruiter.js"
+		"find": "node src/findRecruiter.js",
+		"followup": "node src/followUpToJobs.js"
 	},
 	"repository": {
 		"type": "git",
