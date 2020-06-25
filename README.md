@@ -1,4 +1,4 @@
-# AngelList Auto Applier
+# AngelList Auto Applier (DOES NOT WORK AS OF MAY 2019)
 
 ![Demo](https://media.giphy.com/media/gH8m2AHvrdlccpyH6n/giphy.gif)
 
